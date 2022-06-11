@@ -6,7 +6,7 @@
 /*   By: ephantom <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/03/30 19:13:48 by                  ###   ########.fr       */
+/*   Updated: 2022/06/11 19:38:10 by smdyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
-		rl_on_new_line(); //we have moved onto a new (empty) line
+		rl_on_new_line(); //we have moved onto a new (empty)   line
 		rl_redisplay(); //screen to reflect the current contents of rl_line_buffer
 		write(2, "  \n", 3);
 		rl_replace_line("", 0); //Replace the contents of rl_line_buffer with text.
