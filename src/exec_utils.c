@@ -75,6 +75,7 @@ char	**make_env(t_env *env, t_all *all)
 	{
 		eq = ft_strjoin(tmp->name, "=");
 		envp[len++] = ft_strjoin(eq, tmp->value);
+		free(eq);
 		tmp = tmp->next;
 	}
 	envp[len] = NULL;
@@ -103,10 +104,8 @@ int	init_fd_redirects(int fd_in, int fd_out, int fd_add_out)
 
 int	get_path(t_all *all, char *str)
 {
-	int		i;
 	t_env	*tmp;
 
-	i = -1;
 	tmp = all->list_envp;
 	while (tmp)
 	{
@@ -125,7 +124,6 @@ int	get_path(t_all *all, char *str)
 		envp_list_free(all);
 		exit(127);
 	}
-	while (all->path[++i])
-		all->path[i] = ft_strjoin(all->path[i], "/");
+	slash(all);
 	return (0);
 }

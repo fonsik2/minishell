@@ -15,15 +15,17 @@
 static char	*find_squote(int *index, char *str, char *one, char c)
 {
 	char	*two;
+	char	*tmp;
 	int		start;
 
 	start = ++(*index);
 	while (str[*index] != c)
 		(*index)++;
 	two = ft_substr(str, start, (*index) - start);
-	one = ft_strjoin(one, two);
+	tmp = ft_strjoin(one, two);
 	free(two);
-	return (one);
+	free(one);
+	return (tmp);
 }
 
 char	*parse_squote(char *str, int *i, t_all *all, int flag)
@@ -54,15 +56,17 @@ char	*parse_squote(char *str, int *i, t_all *all, int flag)
 static char	*write_end_dquote(int *index, char *str, char *one)
 {
 	char	*two;
+	char	*tmp;
 	int		start;
 
 	start = ++(*index);
 	while (str[*index])
 		(*index)++;
 	two = ft_substr(str, start, (*index) - start);
-	one = ft_strjoin(one, two);
+	tmp = ft_strjoin(one, two);
 	free(two);
-	return (one);
+	free(one);
+	return (tmp);
 }
 
 static void	have_flag(t_all *all, char *one, char *str, int index)
@@ -81,6 +85,7 @@ char	*parse_dquote(char *str, int *i, t_all *all, int flag)
 {
 	char	*one;
 	char	*two;
+	char	*tmp;
 	int		index;
 	int		start;
 
@@ -92,14 +97,15 @@ char	*parse_dquote(char *str, int *i, t_all *all, int flag)
 	two = ft_substr(str, start, index - start);
 	if (ft_strchr(two, '$'))
 		two = is_dollar(two, all);
-	one = ft_strjoin(one, two);
+	tmp = ft_strjoin(one, two);
 	free(two);
-	(*i) = ft_strlen(one) - 1;
+	free(one);
+	(*i) = ft_strlen(tmp) - 1;
 	if (flag == 1)
-		have_flag(all, one, str, index);
+		have_flag(all, tmp, str, index);
 	if (str[index + 1])
-		one = write_end_dquote(&index, str, one);
+		tmp = write_end_dquote(&index, str, tmp);
 	free(str);
 	str = NULL;
-	return (one);
+	return (tmp);
 }
