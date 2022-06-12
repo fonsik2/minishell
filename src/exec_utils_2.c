@@ -41,3 +41,17 @@ void	init_fd_pipe(t_all *all, int fd_in, int fd_out)
 		close(all->tmp_in);
 	}
 }
+
+void slash(t_all *all)
+{
+	int i;
+	char	*buf;
+
+	i = -1;
+	while (all->path[++i])
+	{
+		buf = all->path[i];
+		all->path[i] = ft_strjoin(buf, "/");
+		free(buf);
+	}	
+}

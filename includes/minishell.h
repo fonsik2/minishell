@@ -83,6 +83,7 @@ int	g_exit_status; // global variable
 int		main(int argc, char **argv, char **envp);
 int		envp_to_list(t_all *all, char **envp);
 int		get_path(t_all *all, char *str);
+void	slash(t_all *all);
 int		get_name(t_env *new, char *str, int *i, char c);
 void	write_arg_in_list(t_all *all, char *str);
 t_arg	*argnew(char *s);

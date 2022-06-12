@@ -48,14 +48,17 @@ static int	er_print(char *str, char *limiter)
 
 static int	read_heredoc(char *limiter, t_all *all)
 {
-	int	fd;
-	int	pid;
-	int	status;
+	int		fd;
+	int		pid;
+	int		status;
+	char	*buf;
 
 	fd = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 		return (er_print(ER_NAME" : here_doc ", limiter));
-	all->here_doc = ft_strjoin(getcwd(NULL, 0), "/here_doc");
+	buf = getcwd(NULL, 0);
+	all->here_doc = ft_strjoin(buf, "/here_doc");
+	free(buf);
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
@@ -71,10 +74,13 @@ static int	read_heredoc(char *limiter, t_all *all)
 
 static char	*get_new_str(char *new_str, char *str, int *index)
 {
-	new_str = ft_strjoin(new_str, "< here_doc ");
+	char	*buf;
+
+	buf = ft_strjoin(new_str, "< here_doc ");
+	free(new_str);
 	if (str[*index])
-		new_str = write_end(index, str, new_str);
-	return (new_str);
+		buf = write_end(index, str, buf);
+	return (buf);
 }
 
 char	*parse_heredoc(char *str, int *i, t_all *all)
