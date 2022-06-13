@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ephantom <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/06/11 19:38:10 by smdyan           ###   ########.fr       */
+/*   Created: 2022/06/12 15:26:12 by smdyan            #+#    #+#             */
+/*   Updated: 2022/06/12 15:26:27 by smdyan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	my_sigint(int signal)
 {
 	if (signal == SIGINT)
 	{
-		rl_on_new_line(); //we have moved onto a new (empty)   line
+		rl_on_new_line(); //we have moved onto a new (empty) line
 		rl_redisplay(); //screen to reflect the current contents of rl_line_buffer
 		write(2, "  \n", 3);
 		rl_replace_line("", 0); //Replace the contents of rl_line_buffer with text.
@@ -28,9 +28,9 @@ void	my_sigint(int signal)
 
 void	handler_sig(void)
 {
-	signal(SIGQUIT, SIG_IGN); //quite program ; Non-builtin commands
+	signal(SIGQUIT, SIG_IGN); //ignore - quite program ; Non-builtin commands
 	signal(SIGINT, my_sigint); //interrupt program ; so that the wait builtin is interruptible
-	signal(SIGTSTP, SIG_IGN); //stop from keyboard
+	signal(SIGTSTP, SIG_IGN); //ignore - stop from keyboard
 }
 
 void	check_number_arg(int argc, char **argv) //минишелл запускается без аргументов
@@ -66,16 +66,16 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_all	all;
 
-	check_number_arg(argc, argv); //no arguments
-	handler_sig(); //init check my_sigint
+	check_number_arg(argc, argv); //no arguments allowed
+	handler_sig();
 	init_struct(&all); //default settings
 	if (envp_to_list(&all, envp) == 1) //creates list of envp
 		return (1);
-	g_exit_status = 0; //no exit
+	g_exit_status = 0; //init "no exit"
 	while (1)			//wait for signal
 	{
 		handler_sig();
-		str = readline(GREEN NAME"> "END);
+		str = readline(GREEN NAME"> "END);//считали команду
 		if (!str)
 		{
 			write(1, "exit\n", 5);

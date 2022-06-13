@@ -17,7 +17,7 @@ char	*parser_str(t_all *all, char *str, int i)
 	while (str[i])
 	{
 		if (str[i] == ' ')
-			str = parse_space(str, &i, all);
+			str = parse_space(str, &i, all); //ignore space in a command?
 		else if (str[i] == '\'')
 			str = parse_squote(str, &i, all, 1);
 		else if (str[i] == '"')
@@ -59,12 +59,13 @@ static void	exec_and_free(t_all *all, char *new_str)
 	new_str = NULL;
 }
 
-void	parser(char *str, t_all *all)
+void	
+parser(char *str, t_all *all)
 {
 	int		result;
 	char	*new_str;
 
-	new_str = ft_strtrim(str, " ");
+	new_str = ft_strtrim(str, " "); //обрезает по краям
 	if (!new_str)
 	{
 		g_exit_status = 258; //why >255 ?
@@ -77,7 +78,7 @@ void	parser(char *str, t_all *all)
 		new_str = NULL;
 		return ;
 	}
-	new_str = parser_str(all, new_str, 0); //next word recursion
+	new_str = parser_str(all, new_str, 0); //
 	if (!new_str)
 	{
 		new_str_null(all); //

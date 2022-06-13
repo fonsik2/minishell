@@ -111,6 +111,8 @@ void	my_sigint(int signal);
 void	close_five_fd(t_all *all);
 void	my_sign_here(int i);
 char	*free_null(t_all *all, char *str, char *new_str);
+t_env	*ft_lstnew(char *str, int i);
+int		ft_lstadd_back(t_env **lst, t_env *new);
 
 // builtin
 void	builtin_echo(t_all *all, int i, int option, int fd);
@@ -130,28 +132,6 @@ int		check_line(char *str);
 void	print_sorted_env(t_all *all);
 int		set_index(t_all *all);
 void	export_print_error(char *str);
-
-// libft
-//void	ft_putstr_fd(char *s, int fd);
-t_env	*ft_lstnew(char *str, int i);
-int		ft_lstadd_back(t_env **lst, t_env *new);
-//int		ft_strncmp(const char *s1, const char *s2, size_t n);
-//int		ft_atoi(const char *str, int i);
-//char	*ft_itoa(int n, int len); 
-//char	**ft_split(char const *s, char c);
-//int		ft_strcmp(const char *s1, const char *s2);
-//char	*ft_strchr(const char *s, int c);
-//char	*ft_strjoin(char *s1, char *s2, int n);
-//int		ft_strlen(const char *str);
-//char	*ft_strtrim(char *s1, char *set, int flag, size_t i);
-//char	*ft_strdup(const char *s1);
-//void	ft_bzero(void *s, size_t n);
-//void	*ft_calloc(size_t count, size_t size);
-//char	*ft_substr(char const *s, unsigned int start, size_t len);
-//int		ft_isalnum(int c);
-//int		ft_isdigit(int c);
-//int		ft_isalpha(int c);
-//char	*ft_strrchr(const char *s, int c);
 
 // parser
 void	parser(char *str, t_all *all);
