@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: carys <marvin@42.fr>                       +#+  +:+       +#+         #
+#    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/15 18:10:20 by carys            ###   ########.fr        #
+#    Updated: 2022/06/15 18:59:22 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCNAME	=	main.c					bin_echo_exit_pwd_env.c	ft_lstadd_back.c\
 			parse_redirect_in.c		parse_utils.c			exec_final.c\
 			parse_heredoc.c			parser_check.c			exec_utils_2.c
 
-BLTDIR = ./built/
+BLTDIR = ./MD/
 SRCDIR = ./src/
 HEADER	= ./includes
 LIBFT = ./libft
@@ -62,7 +62,7 @@ ${NAME}:	${OBJS}
 			${CC} ${CFLAGS} -g -L${LIBREADLN} -lreadline -L$(LIBFT) -lft\
 				-I${HREADLN} -o ${NAME} ${OBJS}
 			@printf "${CLR}${BGN}${RST}\n"
-			
+
 clean:
 			${RM} ${BLTDIR}
 			make fclean -C ${LIBFT}
