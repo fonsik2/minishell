@@ -3,13 +3,12 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+         #
+#    By: carys <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/11 17:19:33 by smdyan            #+#    #+#              #
-#    Updated: 2022/06/11 17:21:17 by smdyan           ###   ########.fr        #
+#    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
+#    Updated: 2022/06/15 18:10:20 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME	=	minishell
 
@@ -27,18 +26,26 @@ SRCNAME	=	main.c					bin_echo_exit_pwd_env.c	ft_lstadd_back.c\
 
 BLTDIR = ./built/
 SRCDIR = ./src/
+HEADER	= ./includes
+LIBFT = ./libft
+
 SRCS = ${addprefix ${SRCDIR}, ${SRCNAME}}
 OBJS	=	${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
 
-HEADER	=	./includes
+LIBREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/lib
+HREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/include
 
-LIBREADLN = /usr/local/Cellar/readline/8.1.2/lib/
-HREADLN = /usr/local/Cellar/readline/8.1.2/include
-LIBFT = ./libft
-
-CC		=	gcc
+CC		=	cc
+RM		=	rm -rf
 
 CFLAGS	=	-Wall -Wextra -Werror
+
+BGN		=	START
+END	=	FINISH
+CLR	=	\x1b[4;32m
+RST		=	\x1b[0m
+
+.PHONY:		all clean fclean re
 
 all:		${BLTDIR} ${NAME}
 
@@ -54,14 +61,17 @@ ${NAME}:	${OBJS}
 			make all -C ${LIBFT}
 			${CC} ${CFLAGS} -g -L${LIBREADLN} -lreadline -L$(LIBFT) -lft\
 				-I${HREADLN} -o ${NAME} ${OBJS}
+			@printf "${CLR}${BGN}${RST}\n"
 			
 clean:
-			rm -rf ${BLTDIR}
+			${RM} ${BLTDIR}
 			make fclean -C ${LIBFT}
 
 fclean:		clean
-			rm -f ${NAME}
+			${RM} ${NAME}
+			@printf "${CLR}${END}${RST}\n"
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+norm:
+			@norminette ${SRCS} ${HEADER}
