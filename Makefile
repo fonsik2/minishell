@@ -25,8 +25,8 @@ SRCNAME	=	main.c					bin_echo_exit_pwd_env.c	ft_lstadd_back.c\
 			parse_redirect_in.c		parse_utils.c			exec_final.c\
 			parse_heredoc.c			parser_check.c			exec_utils_2.c
 
-BLTDIR = ./built/
-SRCDIR = ./src/
+BLTDIR = built/
+SRCDIR = src/
 SRCS = ${addprefix ${SRCDIR}, ${SRCNAME}}
 OBJS	=	${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
 
@@ -46,13 +46,13 @@ $(BLTDIR):
 	mkdir -p $(BLTDIR)
 
 ${BLTDIR}%.o: ${SRCDIR}%.c
-			${CC} ${CFLAGS} -I${HEADER} -c $< -o $@ -MD
+			${CC} ${CFLAGS} -g -I${HEADER} -c $< -o $@ -MD
 
 include $(wildcard *.d)
 
 ${NAME}:	${OBJS}
 			make all -C ${LIBFT}
-			${CC} ${CFLAGS} -g -L${LIBREADLN} -lreadline -L$(LIBFT) -lft\
+			${CC} ${CFLAGS} -L${LIBREADLN} -lreadline -L$(LIBFT) -lft\
 				-I${HREADLN} -o ${NAME} ${OBJS}
 			
 clean:
@@ -63,5 +63,9 @@ fclean:		clean
 			rm -f ${NAME}
 
 re:			fclean all
+
+test:	test.c
+		${CC} ${CFLAGS} -g -L${LIBREADLN} -lreadline -I${HREADLN} -o test test.c
+
 
 .PHONY:		all clean fclean re

@@ -66,13 +66,14 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_all	all;
 
+	printf("start\n");
 	check_number_arg(argc, argv); //no arguments allowed
 	handler_sig();
 	init_struct(&all); //default settings
 	if (envp_to_list(&all, envp) == 1) //creates list of envp
 		return (1);
 	g_exit_status = 0; //init "no exit"
-	while (1)			//wait for signal
+	while (1)
 	{
 		handler_sig();
 		str = readline(GREEN NAME"> "END);//считали команду
