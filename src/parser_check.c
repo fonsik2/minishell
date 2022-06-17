@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:47 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:33:51 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/17 13:28:22 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	token_pipe(char *str, int i)
 int	print_unclosed_pipe(char *check_str)
 {
 	ft_putstr_fd(ER_NAME": error: unclosed pipe\n", 2);
-	g_exit_status = 258;
+	g_exit_status = 258; 
 	free(check_str);
 	return (1);
 }

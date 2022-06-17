@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:20 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:33:27 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/17 13:28:31 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	parser(char *str, t_all *all)
 	new_str = ft_strtrim(str, " ");
 	if (!new_str)
 	{
-		g_exit_status = 258; //why >255 ?
+		g_exit_status = 258; 
 		return ;
 	}
 	result = check_forbidden_symbols(new_str, 0, 0, -1); // fobiden simbols \ ; and odd ' "

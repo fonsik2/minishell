@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ephantom <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/06/11 19:38:10 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/17 14:04:30 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	check_number_arg(int argc, char **argv) //минишелл запускае
 {
 	if (argc != 1)
 	{
-		ft_putstr_fd(GREEN ER_NAME": "END, 2);
+		ft_putstr_fd(YELLOW ER_NAME": "END, 2);
 		ft_putstr_fd(argv[1], 2);
 		ft_putstr_fd(": no such file or directory\n", 2);
 		exit(127); //command not found within PATH
@@ -75,7 +75,7 @@ int	main(int argc, char **argv, char **envp)
 	while (1)			//wait for signal
 	{
 		handler_sig();
-		str = readline(GREEN NAME"> "END);
+		str = readline(YELLOW NAME"> "END);
 		if (!str)
 		{
 			write(1, "exit\n", 5);

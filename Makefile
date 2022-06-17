@@ -6,7 +6,7 @@
 #    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/15 18:59:22 by carys            ###   ########.fr        #
+#    Updated: 2022/06/17 18:05:45 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,10 @@ SRCNAME	=	main.c					bin_echo_exit_pwd_env.c	ft_lstadd_back.c\
 
 BLTDIR = ./MD/
 SRCDIR = ./src/
-HEADER	= ./includes
+HEADER = ./includes
 LIBFT = ./libft
 
-SRCS = ${addprefix ${SRCDIR}, ${SRCNAME}}
+SRCS 	= ${addprefix ${SRCDIR}, ${SRCNAME}}
 OBJS	=	${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
 
 LIBREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/lib
@@ -41,8 +41,8 @@ RM		=	rm -rf
 CFLAGS	=	-Wall -Wextra -Werror
 
 BGN		=	START
-END	=	FINISH
-CLR	=	\x1b[4;32m
+END		=	FINISH
+CLR		=	\x1b[4;32m
 RST		=	\x1b[0m
 
 .PHONY:		all clean fclean re
@@ -56,6 +56,8 @@ ${BLTDIR}%.o: ${SRCDIR}%.c
 			${CC} ${CFLAGS} -I${HEADER} -c $< -o $@ -MD
 
 include $(wildcard *.d)
+include $(wildcard libft/*.d)
+include $(wildcard MD/*.d)
 
 ${NAME}:	${OBJS}
 			make all -C ${LIBFT}
@@ -74,4 +76,4 @@ fclean:		clean
 re:			fclean all
 
 norm:
-			@norminette ${SRCS} ${HEADER}
+			@norminette ${SRCS} ${HEADER} ${LIBFT}

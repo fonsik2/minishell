@@ -3,37 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:22:06 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:22:42 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/17 18:17:42 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include "libft.h"
+# include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <errno.h>
-# include <sys/wait.h>
-# include <signal.h>
-# include <sys/stat.h>
-# include <dirent.h>
-# include <stdio.h>
-# include <sys/ioctl.h>
 # include <termios.h>
 # include <term.h>
+# include <unistd.h>
+# include <sys/ioctl.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "libft.h"
 
-# define NAME "minishell$"
+# define NAME "our_minishell$"
 # define ER_NAME "minishell"
-# define GREEN "\x1b[3;32m"
+# define YELLOW "\x1b[3;33m"
 # define END "\x1b[0m"
+
+typedef struct s_arg
+{
+	char			*str;
+	struct s_arg	*next;
+}	t_arg;
 
 typedef struct s_env
 {
@@ -43,37 +49,31 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_arg
-{
-	char			*str;
-	struct s_arg	*next;
-}	t_arg;
-
 typedef struct s_pipe
 {
 	char			**arg;
-	struct s_pipe	*next;
 	int				pid;
 	int				fd_in;
 	int				fd_out;
 	int				fd_add_out;
 	int				pipe_id;
+	struct s_pipe	*next;
 }	t_pipe;
 
 typedef struct s_all
 {
-	t_env	*list_envp;
 	char	**path;
+	char	*here_doc;
+	int		tmp_in;
 	int		fd_in;
 	int		fd_out;
 	int		fd_add_out;
-	int		tmp_in;
+	int		pipe;
+	int		pipe_id;
 	int		pipe_fd_in;
 	int		pipe_fd_out;
-	char	*here_doc;
-	int		pipe_id;
-	int		pipe;
 	t_arg	*arg_list;
+	t_env	*list_envp;
 	t_pipe	*pipex;
 }	t_all;
 
@@ -110,7 +110,6 @@ void	my_sigint(int signal);
 void	close_five_fd(t_all *all);
 void	my_sign_here(int i);
 char	*free_null(t_all *all, char *str, char *new_str);
-
 // builtin
 void	builtin_echo(t_all *all, int i, int option, int fd);
 void	builtin_exit(t_all *all);
@@ -129,14 +128,13 @@ int		check_line(char *str);
 void	print_sorted_env(t_all *all);
 int		set_index(t_all *all);
 void	export_print_error(char *str);
-
 // libft
 //void	ft_putstr_fd(char *s, int fd);
 t_env	*ft_lstnew(char *str, int i);
 int		ft_lstadd_back(t_env **lst, t_env *new);
 //int		ft_strncmp(const char *s1, const char *s2, size_t n);
 //int		ft_atoi(const char *str, int i);
-//char	*ft_itoa(int n, int len); 
+//char	*ft_itoa(int n, int len);
 //char	**ft_split(char const *s, char c);
 //int		ft_strcmp(const char *s1, const char *s2);
 //char	*ft_strchr(const char *s, int c);
