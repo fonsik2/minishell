@@ -6,7 +6,7 @@
 #    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/17 18:05:45 by carys            ###   ########.fr        #
+#    Updated: 2022/06/18 17:43:56 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ HEADER = ./includes
 LIBFT = ./libft
 
 SRCS 	= ${addprefix ${SRCDIR}, ${SRCNAME}}
-OBJS	=	${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
+OBJS	= ${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
 
 LIBREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/lib
 HREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/include
@@ -38,11 +38,11 @@ HREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/include
 CC		=	cc
 RM		=	rm -rf
 
-CFLAGS	=	-Wall -Wextra -Werror
+CFLAGS	=	-Wall -Wextra -Werror 
 
 BGN		=	START
 END		=	FINISH
-CLR		=	\x1b[4;32m
+CLR		=	\x1b[4;33m
 RST		=	\x1b[0m
 
 .PHONY:		all clean fclean re
@@ -53,24 +53,26 @@ $(BLTDIR):
 	mkdir -p $(BLTDIR)
 
 ${BLTDIR}%.o: ${SRCDIR}%.c
-			${CC} ${CFLAGS} -I${HEADER} -c $< -o $@ -MD
+			${CC} ${CFLAGS} -g -I${HEADER} -MD -c $< -o $@
 
 include $(wildcard *.d)
 include $(wildcard libft/*.d)
 include $(wildcard MD/*.d)
+include $(wildcard src/*.d)
 
 ${NAME}:	${OBJS}
-			make all -C ${LIBFT}
-			${CC} ${CFLAGS} -g -L${LIBREADLN} -lreadline -L$(LIBFT) -lft\
+			${MAKE} -C ${LIBFT}
+			${CC} ${CFLAGS} -L${LIBREADLN} -lreadline -L${LIBFT} -lft\
 				-I${HREADLN} -o ${NAME} ${OBJS}
 			@printf "${CLR}${BGN}${RST}\n"
 
 clean:
 			${RM} ${BLTDIR}
-			make fclean -C ${LIBFT}
+			${MAKE} clean -C ${LIBFT}
 
 fclean:		clean
 			${RM} ${NAME}
+			${MAKE} fclean -C ${LIBFT}
 			@printf "${CLR}${END}${RST}\n"
 
 re:			fclean all

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_one.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:28:27 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:28:33 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 21:08:17 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*get_path_exec(t_all *all)
 	return (full_path);
 }
 
-void	child_one(t_all *all)
+static void	child_one(t_all *all)
 {
 	char	*full_path;
 	char	**env;
@@ -63,24 +63,24 @@ void	exec_one(t_all *all)
 	int		status;
 	pid_t	pid;
 
-	g_exit_status = 0;
+	g_exit = 0;
 	handle_signals_in_proc();
 	pid = fork();
 	if (pid == -1)
 	{
 		perror(ER_NAME);
-		g_exit_status = 1;
+		g_exit = 1;
 		return ;
 	}
 	if (!pid)
 		child_one(all);
 	else
 	{
-		waitpid(pid, &status, 0); //wait for child procces
-		if (g_exit_status != 130 && g_exit_status != 131)
-			g_exit_status = WEXITSTATUS(status);
+		waitpid(pid, &status, 0);
+		if (g_exit != 130 && g_exit != 131)
+			g_exit = WEXITSTATUS(status);
 		close_fds(all->pipex->fd_in,
 			all->pipex->fd_out, all->pipex->fd_add_out);
 	}
-	handler_sig();
+	handler_signal();
 }

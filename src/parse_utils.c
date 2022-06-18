@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:32:43 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:32:46 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 19:47:39 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	print_pipe_error(char *str, int i)
 		ft_putstr_fd(ER_NAME": syntax error near unexpected token `|'\n", 2);
 }
 
-int	find_token(char *str, int i)
+static int	find_token(char *str, int i)
 {
 	if (str[i] == '>')
 	{

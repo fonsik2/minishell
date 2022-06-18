@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:29:17 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:29:20 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 12:04:18 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ char	*get_path_for_exec(t_all *all, char **new_arg)
 	int		i;
 
 	i = -1;
-	if (all->path)
+	if (all->envp)
 	{
-		ft_free(all->path);
-		all->path = NULL;
+		ft_free(all->envp);
+		all->envp = NULL;
 	}
 	get_path(all, new_arg[0]);
-	while (all->path[++i])
+	while (all->envp[++i])
 	{
 		if (!(ft_strchr(new_arg[0], '/')))
-			find_com = ft_strjoin(all->path[i], new_arg[0]);
+			find_com = ft_strjoin(all->envp[i], new_arg[0]);
 		else
 			find_com = ft_strdup(new_arg[0]);
 		if (access_find_com(find_com))
@@ -75,6 +75,7 @@ char	**make_env(t_env *env, t_all *all)
 	{
 		eq = ft_strjoin(tmp->name, "=");
 		envp[len++] = ft_strjoin(eq, tmp->value);
+		free(eq);
 		tmp = tmp->next;
 	}
 	envp[len] = NULL;
@@ -103,21 +104,19 @@ int	init_fd_redirects(int fd_in, int fd_out, int fd_add_out)
 
 int	get_path(t_all *all, char *str)
 {
-	int		i;
 	t_env	*tmp;
 
-	i = -1;
 	tmp = all->list_envp;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->name, "PATH", 4) == 0)
 		{
-			all->path = ft_split(ft_strchr(tmp->value, '/'), ':');
+			all->envp = ft_split(ft_strchr(tmp->value, '/'), ':');
 			break ;
 		}
 		tmp = tmp->next;
 	}
-	if (!(all->path))
+	if (!(all->envp))
 	{
 		ft_putstr_fd(ER_NAME": ", 2);
 		ft_putstr_fd(str, 2);
@@ -125,7 +124,6 @@ int	get_path(t_all *all, char *str)
 		envp_list_free(all);
 		exit(127);
 	}
-	while (all->path[++i])
-		all->path[i] = ft_strjoin(all->path[i], "/");
+	slash(all);
 	return (0);
 }

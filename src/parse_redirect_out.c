@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:31:55 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/17 16:12:22 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/18 11:52:20 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	open_out_file(char *out_file, t_all *all)
 		perror(tmp);
 		free(tmp);
 		free(out_file);
-		g_exit_status = 1;
+		g_exit = 1;
 		return (1);
 	}
 	close(all->fd_out);
@@ -80,7 +80,7 @@ static int	open_add_out_file(char *out_file, t_all *all)
 		perror(tmp);
 		free(tmp);
 		free(out_file);
-		g_exit_status = 1;
+		g_exit = 1;
 		return (1);
 	}
 	close(all->fd_add_out);

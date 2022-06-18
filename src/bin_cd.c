@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:24:32 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:24:37 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 20:58:34 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_pwd(int flag)
+static char	*get_pwd(int flag)
 {
 	char	*dir;
 
@@ -24,13 +24,13 @@ char	*get_pwd(int flag)
 			ft_putstr_fd(ER_NAME": ", 2);
 			perror("cd: ");
 		}
-		g_exit_status = 127;
+		g_exit = 127;
 		return (NULL);
 	}
 	return (dir);
 }
 
-void	check_oldpwd(t_all *all)
+static void	check_oldpwd(t_all *all)
 {
 	t_env	*tmp;
 	int		flag;
@@ -47,7 +47,7 @@ void	check_oldpwd(t_all *all)
 		ft_lstadd_back(&all->list_envp, ft_lstnew("OLDPWD= ", 0));
 }
 
-int	check_after_cd_two(t_all *all, int *find)
+static int	check_after_cd_two(t_all *all, int *find)
 {
 	char	*dir;
 	char	*s;
@@ -70,14 +70,14 @@ int	check_after_cd_two(t_all *all, int *find)
 	return (0);
 }
 
-void	end_cd(t_all *all, char *old_pwd)
+static void	end_cd(t_all *all, char *old_pwd)
 {
 	char	*pwd;
 
 	pwd = get_pwd(1);
 	check_oldpwd(all);
 	add_new_pwd(all, old_pwd, pwd);
-	g_exit_status = 0;
+	g_exit = 0;
 }
 
 void	builtin_cd(t_all *all)

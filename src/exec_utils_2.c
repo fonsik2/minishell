@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:29:36 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:29:39 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 12:04:18 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,19 @@ void	init_fd_pipe(t_all *all, int fd_in, int fd_out)
 		dup2(all->tmp_in, 0);
 		close(fd_out);
 		close(all->tmp_in);
+	}
+}
+
+void slash(t_all *all)
+{
+	int i;
+	char	*buf;
+
+	i = -1;
+	while (all->envp[++i])
+	{
+		buf = all->envp[i];
+		all->envp[i] = ft_strjoin(buf, "/");
+		free(buf);
 	}
 }

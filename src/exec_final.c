@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_final.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:28:03 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:28:08 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 21:14:31 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_final(t_all *all)
+static void	child_final(t_all *all)
 {
 	char	*full_path;
 	char	**env;
@@ -35,13 +35,13 @@ void	exec_final(t_all *all)
 	int		status;
 	pid_t	pid;
 
-	g_exit_status = 0;
+	g_exit = 0;
 	handle_signals_in_proc();
 	pid = fork();
 	if (pid == -1)
 	{
 		perror(ER_NAME);
-		g_exit_status = 1;
+		g_exit = 1;
 		return ;
 	}
 	if (!pid)
@@ -51,7 +51,7 @@ void	exec_final(t_all *all)
 		close_fds(all->pipex->fd_in,
 			all->pipex->fd_out, all->pipex->fd_add_out);
 		waitpid(pid, &status, 0);
-		if (g_exit_status != 130 && g_exit_status != 131)
-			g_exit_status = WEXITSTATUS(status);
+		if (g_exit != 130 && g_exit != 131)
+			g_exit = WEXITSTATUS(status);
 	}
 }

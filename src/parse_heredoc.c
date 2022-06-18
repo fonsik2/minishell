@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:30:35 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:30:39 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 13:12:34 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,23 @@ static int	er_print(char *str, char *limiter)
 {
 	perror(str);
 	free(limiter);
-	g_exit_status = 1;
-	return (g_exit_status);
+	g_exit = 1;
+	return (g_exit);
 }
 
 static int	read_heredoc(char *limiter, t_all *all)
 {
-	int	fd;
-	int	pid;
-	int	status;
+	int		fd;
+	int		pid;
+	int		status;
+	char	*buf;
 
 	fd = open("here_doc", O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd == -1)
 		return (er_print(ER_NAME" : here_doc ", limiter));
-	all->here_doc = ft_strjoin(getcwd(NULL, 0), "/here_doc");
+	buf = getcwd(NULL, 0);
+	all->here_doc = ft_strjoin(buf, "/here_doc");
+	free(buf);
 	signal(SIGINT, SIG_IGN);
 	pid = fork();
 	if (pid < 0)
@@ -63,18 +66,21 @@ static int	read_heredoc(char *limiter, t_all *all)
 	if (pid == 0)
 		return (ft_heredoc(limiter, fd));
 	wait(&status);
-	g_exit_status = WEXITSTATUS(status);
+	g_exit = WEXITSTATUS(status);
 	close(fd);
 	free(limiter);
-	return (g_exit_status);
+	return (g_exit);
 }
 
 static char	*get_new_str(char *new_str, char *str, int *index)
 {
-	new_str = ft_strjoin(new_str, "< here_doc ");
+	char	*buf;
+
+	buf = ft_strjoin(new_str, "< here_doc ");
+	free(new_str);
 	if (str[*index])
-		new_str = write_end(index, str, new_str);
-	return (new_str);
+		buf = write_end(index, str, buf);
+	return (buf);
 }
 
 char	*parse_heredoc(char *str, int *i, t_all *all)
@@ -98,7 +104,7 @@ char	*parse_heredoc(char *str, int *i, t_all *all)
 	limiter = ft_substr(str, start, index - start);
 	if (read_heredoc(limiter, all))
 		return (free_null(all, str, new_str));
-	handler_sig();
+	handler_signal();
 	(*i) = ft_strlen(new_str) - 1;
 	new_str = get_new_str(new_str, str, &index);
 	free(str);

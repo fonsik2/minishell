@@ -6,58 +6,58 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/06/17 14:04:30 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/18 19:12:33 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_sigint(int signal)
-{
-	if (signal == SIGINT)
-	{
-		rl_on_new_line(); //we have moved onto a new (empty)   line
-		rl_redisplay(); //screen to reflect the current contents of rl_line_buffer
-		write(2, "  \n", 3);
-		rl_replace_line("", 0); //Replace the contents of rl_line_buffer with text.
-		rl_on_new_line(); //update routines that we have moved onto a new (empty) line
-		rl_redisplay();
-		g_exit_status = 1; //set exit flag
-	}
-}
-
-void	handler_sig(void)
-{
-	signal(SIGQUIT, SIG_IGN); //quite program ; Non-builtin commands
-	signal(SIGINT, my_sigint); //interrupt program ; so that the wait builtin is interruptible
-	signal(SIGTSTP, SIG_IGN); //stop from keyboard
-}
-
-void	check_number_arg(int argc, char **argv) //минишелл запускается без аргументов
+static void	check_number_arg(int argc, char **argv)
 {
 	if (argc != 1)
 	{
 		ft_putstr_fd(YELLOW ER_NAME": "END, 2);
 		ft_putstr_fd(argv[1], 2);
-		ft_putstr_fd(": no such file or directory\n", 2);
-		exit(127); //command not found within PATH
+		ft_putstr_fd(": No such file or directory\n", 2);
+		exit(127);
 	}
 }
 
-void	init_struct(t_all *all)
+static void	handler_C(int signal)
+{
+	if (signal == SIGINT)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+		write(2, "  \n", 3);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+		g_exit = 1;
+	}
+}
+
+void	handler_signal(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGINT, handler_C);
+}
+
+static void	init_struct(t_all *all)
 {
 	all->list_envp = NULL;
-	all->path = NULL;
+	all->here_doc = NULL;
+	all->envp = NULL;
+	all->tmp_in = -1;
 	all->fd_in = -1;
 	all->fd_out = -1;
 	all->fd_add_out = -1;
-	all->here_doc = NULL;
-	all->tmp_in = -1;
+	all->pipe = 0;
+	all->pipe_id = 0;
 	all->pipe_fd_in = -1;
 	all->pipe_fd_out = -1;
 	all->arg_list = NULL;
-	all->pipe_id = 0;
-	all->pipe = 0;
 	all->pipex = NULL;
 }
 
@@ -66,19 +66,20 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_all	all;
 
-	check_number_arg(argc, argv); //no arguments
-	handler_sig(); //init check my_sigint
-	init_struct(&all); //default settings
-	if (envp_to_list(&all, envp) == 1) //creates list of envp
+	printf(YELLOW "entry\n");
+	check_number_arg(argc, argv);
+	handler_signal();
+	init_struct(&all);
+	if (envp_to_list(&all, envp) == 1)
 		return (1);
-	g_exit_status = 0; //no exit
-	while (1)			//wait for signal
+	g_exit = 0;
+	while (1)
 	{
-		handler_sig();
+		handler_signal();
 		str = readline(YELLOW NAME"> "END);
 		if (!str)
 		{
-			write(1, "exit\n", 5);
+			printf(YELLOW "exit\n");
 			break ;
 		}
 		if (*str)

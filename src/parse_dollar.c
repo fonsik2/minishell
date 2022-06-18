@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:30:16 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:30:19 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 11:52:20 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	*check_env(t_all *all, char *two)
 char	*write_end(int *index, char *str, char *one)
 {
 	char	*two;
+	char	*tmp;
 	int		start;
 
 	start = *index;
@@ -41,10 +42,15 @@ char	*write_end(int *index, char *str, char *one)
 		(*index)++;
 	two = ft_substr(str, start, (*index) - start);
 	if (!(one[0]))
-		two = ft_strtrim(two, " ");
-	one = ft_strjoin(one, two);
+	{
+		tmp = two;
+		two = ft_strtrim(tmp, " ");
+		free(tmp);
+	}
+	tmp = ft_strjoin(one, two);
 	free(two);
-	return (one);
+	free(one);
+	return (tmp);
 }
 
 static char	*check_after_dollar(int *index, t_all *all, char *str, char *two)
@@ -54,7 +60,7 @@ static char	*check_after_dollar(int *index, t_all *all, char *str, char *two)
 	start = ++(*index);
 	if (str[*index] == '?')
 	{
-		two = ft_itoa(g_exit_status);
+		two = ft_itoa(g_exit);
 		(*index)++;
 	}
 	else if (ft_isdigit(str[*index]))
@@ -79,6 +85,7 @@ char	*parse_dollar(char *str, int *i, t_all *all)
 {
 	char	*one;
 	char	*two;
+	char	*tmp;
 	int		index;
 
 	index = *i;
@@ -91,13 +98,14 @@ char	*parse_dollar(char *str, int *i, t_all *all)
 		return (str);
 	}
 	(*i) += ft_strlen(two) - 1;
-	one = ft_strjoin(one, two);
+	tmp = ft_strjoin(one, two);
 	free(two);
+	free(one);
 	if (str[index])
-		one = write_end(&index, str, one);
+		tmp = write_end(&index, str, tmp);
 	free(str);
 	str = NULL;
-	return (one);
+	return (tmp);
 }
 
 char	*is_dollar(char *str, t_all *all)

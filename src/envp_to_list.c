@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_to_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:27:11 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:27:15 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 19:10:34 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_name(t_env *new, char *str, int *i, char c)
 	return (0);
 }
 
-void	*shlvl_plus_one(t_env *new)
+static void	*shlvl_plus_one(t_env *new)
 {
 	int	lvl;
 

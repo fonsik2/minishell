@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   bin_unset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:26:51 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:26:55 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 20:46:22 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_del_lst(char *str, t_all *all)
+static void	ft_del_lst(char *str, t_all *all)
 {
 	t_env	*tmp;
 	t_env	*prev;
@@ -66,7 +66,7 @@ void	builtin_unset(t_all *all, int i)
 			tmp = tmp->next;
 		}
 	}
-	g_exit_status = 0;
+	g_exit = 0;
 }
 
 int	check_line(char *str)

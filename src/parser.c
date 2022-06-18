@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:20 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/17 13:28:31 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/18 19:27:26 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static void	new_str_null(t_all *all)
 	all->pipe_id = 0;
 	argv_list_free(all, 0);
 	pipe_list_free(all);
-	if (g_exit_status != 1)
-		g_exit_status = 258;
+	if (g_exit != 1)
+		g_exit = 258;
 }
 
 static void	exec_and_free(t_all *all, char *new_str)
@@ -59,7 +59,7 @@ static void	exec_and_free(t_all *all, char *new_str)
 	new_str = NULL;
 }
 
-void	parser(char *str, t_all *all)
+void parser(char *str, t_all *all)
 {
 	int		result;
 	char	*new_str;
@@ -67,17 +67,17 @@ void	parser(char *str, t_all *all)
 	new_str = ft_strtrim(str, " ");
 	if (!new_str)
 	{
-		g_exit_status = 258; 
+		g_exit = 258;
 		return ;
 	}
-	result = check_forbidden_symbols(new_str, 0, 0, -1); // fobiden simbols \ ; and odd ' "
+	result = check_forbidden_symbols(new_str, 0, 0, -1);
 	if ((check_closed_quote(result)) || (check_empty_pipe(new_str, -1)))
 	{
 		free(new_str);
 		new_str = NULL;
 		return ;
 	}
-	new_str = parser_str(all, new_str, 0); //next word recursion
+	new_str = parser_str(all, new_str, 0); //
 	if (!new_str)
 	{
 		new_str_null(all); //
