@@ -6,13 +6,13 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:20 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 19:27:26 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/19 15:13:59 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parser_str(t_all *all, char *str, int i)
+static char	*parser_str(t_all *all, char *str, int i)
 {
 	while (str[i])
 	{
@@ -59,7 +59,7 @@ static void	exec_and_free(t_all *all, char *new_str)
 	new_str = NULL;
 }
 
-void parser(char *str, t_all *all)
+void	parser(char *str, t_all *all)
 {
 	int		result;
 	char	*new_str;
@@ -77,11 +77,29 @@ void parser(char *str, t_all *all)
 		new_str = NULL;
 		return ;
 	}
-	new_str = parser_str(all, new_str, 0); //
+	new_str = parser_str(all, new_str, 0);
 	if (!new_str)
 	{
-		new_str_null(all); //
+		new_str_null(all);
 		return ;
 	}
-	exec_and_free(all, new_str); //exec command
+	exec_and_free(all, new_str);
+}
+
+int	ft_lstadd_back(t_env **lst, t_env *new)
+{
+	t_env	*el;
+
+	if (!new || !lst)
+		return (1);
+	if (!(*lst))
+	{
+		*lst = new;
+		return (0);
+	}
+	el = *lst;
+	while (el->next)
+		el = el->next;
+	el->next = new;
+	return (0);
 }

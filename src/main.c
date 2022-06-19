@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/06/18 19:12:33 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/19 16:32:16 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	check_number_arg(int argc, char **argv)
 {
+	printf(YELLOW "Entry\n");
 	if (argc != 1)
 	{
 		ft_putstr_fd(YELLOW ER_NAME": "END, 2);
@@ -23,7 +24,7 @@ static void	check_number_arg(int argc, char **argv)
 	}
 }
 
-static void	handler_C(int signal)
+static void	handler_c(int signal)
 {
 	if (signal == SIGINT)
 	{
@@ -41,7 +42,7 @@ void	handler_signal(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGTSTP, SIG_IGN);
-	signal(SIGINT, handler_C);
+	signal(SIGINT, handler_c);
 }
 
 static void	init_struct(t_all *all)
@@ -66,7 +67,6 @@ int	main(int argc, char **argv, char **envp)
 	char	*str;
 	t_all	all;
 
-	printf(YELLOW "entry\n");
 	check_number_arg(argc, argv);
 	handler_signal();
 	init_struct(&all);

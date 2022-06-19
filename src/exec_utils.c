@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:29:17 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 12:04:18 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/19 15:11:28 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,32 @@ static char	*access_find_com(char *find_com)
 		return (find_com);
 	}
 	return (NULL);
+}
+
+static int	get_path(t_all *all, char *str)
+{
+	t_env	*tmp;
+
+	tmp = all->list_envp;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->name, "PATH", 4) == 0)
+		{
+			all->envp = ft_split(ft_strchr(tmp->value, '/'), ':');
+			break ;
+		}
+		tmp = tmp->next;
+	}
+	if (!(all->envp))
+	{
+		ft_putstr_fd(ER_NAME": ", 2);
+		ft_putstr_fd(str, 2);
+		ft_putstr_fd(": No such file or directory\n", 2);
+		envp_list_free(all);
+		exit(127);
+	}
+	slash(all);
+	return (0);
 }
 
 char	*get_path_for_exec(t_all *all, char **new_arg)
@@ -99,31 +125,5 @@ int	init_fd_redirects(int fd_in, int fd_out, int fd_add_out)
 		if (dup2(fd_add_out, 1) == -1)
 			return (1);
 	}
-	return (0);
-}
-
-int	get_path(t_all *all, char *str)
-{
-	t_env	*tmp;
-
-	tmp = all->list_envp;
-	while (tmp)
-	{
-		if (ft_strncmp(tmp->name, "PATH", 4) == 0)
-		{
-			all->envp = ft_split(ft_strchr(tmp->value, '/'), ':');
-			break ;
-		}
-		tmp = tmp->next;
-	}
-	if (!(all->envp))
-	{
-		ft_putstr_fd(ER_NAME": ", 2);
-		ft_putstr_fd(str, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		envp_list_free(all);
-		exit(127);
-	}
-	slash(all);
 	return (0);
 }

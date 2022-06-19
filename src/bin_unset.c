@@ -6,11 +6,49 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:26:51 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 20:46:22 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/19 15:10:42 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	init_fd_pipe(t_all *all, int fd_in, int fd_out)
+{
+	if (all->pipex->pipe_id == 0)
+	{
+		close(fd_in);
+		dup2(fd_out, 1);
+		close(fd_out);
+		close(all->tmp_in);
+	}
+	else if (all->pipex->pipe_id == all->pipe_id - 1)
+	{
+		close(fd_out);
+		dup2(all->tmp_in, 0);
+		close(all->tmp_in);
+	}
+	else
+	{
+		dup2(fd_out, 1);
+		dup2(all->tmp_in, 0);
+		close(fd_out);
+		close(all->tmp_in);
+	}
+}
+
+void	slash(t_all *all)
+{
+	int		i;
+	char	*buf;
+
+	i = -1;
+	while (all->envp[++i])
+	{
+		buf = all->envp[i];
+		all->envp[i] = ft_strjoin(buf, "/");
+		free(buf);
+	}
+}
 
 static void	ft_del_lst(char *str, t_all *all)
 {
@@ -40,6 +78,25 @@ static void	ft_del_lst(char *str, t_all *all)
 	free(tmp);
 }
 
+int	check_line(char *str)
+{
+	int	i;
+
+	i = -1;
+	if (!str)
+		return (-1);
+	if ((!ft_isalpha(str[0])) && str[0] != '_')
+		return (-1);
+	while (str[++i] && str[i] != '=')
+	{
+		if (!(ft_isalnum(str[i]) && str[i] != '_'))
+			return (-1);
+	}
+	if (!(ft_strchr(str, '=')))
+		return (-2);
+	return (0);
+}
+
 void	builtin_unset(t_all *all, int i)
 {
 	t_env	*tmp;
@@ -67,23 +124,4 @@ void	builtin_unset(t_all *all, int i)
 		}
 	}
 	g_exit = 0;
-}
-
-int	check_line(char *str)
-{
-	int	i;
-
-	i = -1;
-	if (!str)
-		return (-1);
-	if ((!ft_isalpha(str[0])) && str[0] != '_')
-		return (-1);
-	while (str[++i] && str[i] != '=')
-	{
-		if (!(ft_isalnum(str[i]) && str[i] != '_'))
-			return (-1);
-	}
-	if (!(ft_strchr(str, '=')))
-		return (-2);
-	return (0);
 }

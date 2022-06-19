@@ -6,13 +6,13 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:28:49 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 21:07:30 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/19 11:30:14 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_sigquit_proc(int sig)
+static void	my_sigquit_proc(int sig)
 {
 	printf("Quit: %d\n", sig);
 	g_exit = 131;
