@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:27:11 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 19:10:34 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/20 15:18:05 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	get_name(t_env *new, char *str, int *i, char c)
 {
 	int	len;
 
-	while (str[(*i)] != c)
+	while (str[(*i)] != c && str[(*i)] != '\0')
 		(*i)++;
 	new->name = (char *)malloc(sizeof(char) * ((*i) + 1));
 	if (!new->name)

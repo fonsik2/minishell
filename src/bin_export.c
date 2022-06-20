@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:25:54 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 20:44:41 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/20 15:14:07 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void	builtin_export(t_all *all)
 			else
 			{
 				if (check_line(all->pipex->arg[i]) == -2)
-					equal = 0;
+					equal = 1;
 				add_to_env(all, all->pipex->arg[i], equal);
 			}
 		}

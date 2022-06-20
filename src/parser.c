@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:20 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/19 15:13:59 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/20 10:35:11 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	exec_and_free(t_all *all, char *new_str)
 
 void	parser(char *str, t_all *all)
 {
-	int		result;
+	//int		result;
 	char	*new_str;
 
 	new_str = ft_strtrim(str, " ");
@@ -70,8 +70,9 @@ void	parser(char *str, t_all *all)
 		g_exit = 258;
 		return ;
 	}
-	result = check_forbidden_symbols(new_str, 0, 0, -1);
-	if ((check_closed_quote(result)) || (check_empty_pipe(new_str, -1)))
+	//result = check_forbidden_symbols(new_str, 0, 0, -1);
+	//if ((check_closed_quote(result)) || (check_empty_pipe(new_str, -1)))
+	if (check_empty_pipe(new_str, -1))
 	{
 		free(new_str);
 		new_str = NULL;

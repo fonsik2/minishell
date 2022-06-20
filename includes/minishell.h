@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:22:06 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/19 16:17:07 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/20 18:16:00 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@
 # include <signal.h>
 # include <stdio.h>
 # include <string.h>
-# include <termios.h>
 # include <unistd.h>
 # include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 
-# define NAME "our_minishell$"
+# define NAME "🌼 our_minishell🐝 $"
 # define ER_NAME "minishell"
-# define YELLOW "\x1b[3;33m"
+# define COLOR "\x1b[3;32m"
 # define END "\x1b[0m"
 
 typedef struct s_arg

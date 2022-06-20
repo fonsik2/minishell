@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/06/19 16:32:16 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/20 18:15:17 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 static void	check_number_arg(int argc, char **argv)
 {
-	printf(YELLOW "Entry\n");
+	printf(COLOR "🌈 Entry\n");
 	if (argc != 1)
 	{
-		ft_putstr_fd(YELLOW ER_NAME": "END, 2);
+		ft_putstr_fd(COLOR ER_NAME": "END, 2);
 		ft_putstr_fd(argv[1], 2);
 		ft_putstr_fd(": No such file or directory\n", 2);
 		exit(127);
@@ -76,10 +76,10 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		handler_signal();
-		str = readline(YELLOW NAME"> "END);
+		str = readline(COLOR NAME"> "END);
 		if (!str)
 		{
-			printf(YELLOW "exit\n");
+			printf(COLOR "exit✋\n");
 			break ;
 		}
 		if (*str)
