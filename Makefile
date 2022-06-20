@@ -6,7 +6,7 @@
 #    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/20 19:59:42 by carys            ###   ########.fr        #
+#    Updated: 2022/06/20 20:37:07 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ ${NAME}:	${OBJS} $(LIBFT_LIB)
 $(LIBFT_LIB):	make_lib ;
 
 make_lib:
-			make -C $(LIBFT)
+			@${MAKE} -C $(LIBFT)
 
 clean:
 			${RM} ${BLTDIR}
