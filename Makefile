@@ -6,7 +6,7 @@
 #    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/19 15:04:14 by carys            ###   ########.fr        #
+#    Updated: 2022/06/20 19:59:42 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ BLTDIR = ./MD/
 SRCDIR = ./src/
 HEADER = ./includes
 LIBFT = ./libft
+LIBFT_LIB	= $(LIBFT)/libft.a
 
 SRCS 	= ${addprefix ${SRCDIR}, ${SRCNAME}}
 OBJS	= ${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
@@ -43,7 +44,7 @@ END		=	FINISH
 CLR		=	\x1b[4;33m
 RST		=	\x1b[0m
 
-.PHONY:		all clean fclean re
+.PHONY:		all clean fclean re make_lib
 
 all:		${BLTDIR} ${NAME}
 
@@ -54,15 +55,18 @@ ${BLTDIR}%.o: ${SRCDIR}%.c
 			${CC} ${CFLAGS} -g -I${HEADER} -MD -c $< -o $@
 
 include $(wildcard *.d)
-include $(wildcard libft/*.d)
 include $(wildcard MD/*.d)
 include $(wildcard src/*.d)
 
-${NAME}:	${OBJS}
-			${MAKE} -C ${LIBFT}
+${NAME}:	${OBJS} $(LIBFT_LIB)
 			${CC} ${CFLAGS} -L${LIBREADLN} -lreadline -L${LIBFT} -lft\
 				-I${HREADLN} -o ${NAME} ${OBJS}
 			@printf "${CLR}${BGN}${RST}\n"
+
+$(LIBFT_LIB):	make_lib ;
+
+make_lib:
+			make -C $(LIBFT)
 
 clean:
 			${RM} ${BLTDIR}
@@ -76,4 +80,4 @@ fclean:		clean
 re:			fclean all
 
 norm:
-			@norminette ${SRCS} ${HEADER}
+			@norminette ${SRCS} ${HEADER} ${LIBFT}
