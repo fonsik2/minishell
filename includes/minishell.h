@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:22:06 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/21 12:34:40 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:55:20 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@
 # define ER_NAME "minishell"
 # define COLOR "\001\033[1;92m\002"
 # define END "\001\033[0m\002"
-//# define COLOR "\x1b[3;32m"
-//# define END "\x1b[0m"
 
 typedef struct s_arg
 {
@@ -59,7 +57,7 @@ typedef struct s_pipe
 
 typedef struct s_all
 {
-	char	**envp;
+	char	**path;
 	char	*here_doc;
 	int		tmp_in;
 	int		fd_in;

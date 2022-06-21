@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:34:44 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 12:04:18 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:55:15 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	pipe_list_free(t_all *all)
 
 void	free_all(t_all *all)
 {
-	if (all->envp)
-		ft_free(all->envp);
+	if (all->path)
+		ft_free(all->path);
 	envp_list_free(all);
 	argv_list_free(all, 0);
 	pipe_list_free(all);

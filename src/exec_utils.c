@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:29:17 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/19 15:11:28 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:56:53 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,12 @@ static int	get_path(t_all *all, char *str)
 	{
 		if (ft_strncmp(tmp->name, "PATH", 4) == 0)
 		{
-			all->envp = ft_split(ft_strchr(tmp->value, '/'), ':');
+			all->path = ft_split(ft_strchr(tmp->value, '/'), ':');
 			break ;
 		}
 		tmp = tmp->next;
 	}
-	if (!(all->envp))
+	if (!(all->path))
 	{
 		ft_putstr_fd(ER_NAME": ", 2);
 		ft_putstr_fd(str, 2);
@@ -65,16 +65,16 @@ char	*get_path_for_exec(t_all *all, char **new_arg)
 	int		i;
 
 	i = -1;
-	if (all->envp)
+	if (all->path)
 	{
-		ft_free(all->envp);
-		all->envp = NULL;
+		ft_free(all->path);
+		all->path = NULL;
 	}
 	get_path(all, new_arg[0]);
-	while (all->envp[++i])
+	while (all->path[++i])
 	{
 		if (!(ft_strchr(new_arg[0], '/')))
-			find_com = ft_strjoin(all->envp[i], new_arg[0]);
+			find_com = ft_strjoin(all->path[i], new_arg[0]);
 		else
 			find_com = ft_strdup(new_arg[0]);
 		if (access_find_com(find_com))
@@ -93,7 +93,7 @@ char	**make_env(t_env *env, t_all *all)
 
 	tmp = all->list_envp;
 	len = len_env(env);
-	envp = malloc(sizeof(char *) * (len + 1));
+	envp = (char **)malloc(sizeof(char *) * (len + 1));
 	if (!envp)
 		exit(1);
 	len = 0;

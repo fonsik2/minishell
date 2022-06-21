@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:24:57 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/21 15:15:06 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 16:57:01 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	check_after_cd_one(t_all *all, int *find)
 	t_env	*tmp;
 
 	tmp = all->list_envp;
-	if ((!(ft_strcmp(all->pipex->arg[1], "~")) || (!all->pipex->arg[1])))
+	if (!(ft_strcmp(all->pipex->arg[1], "~")))
 	{
 		*find = 1;
 		while (tmp)

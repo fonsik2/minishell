@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:26:51 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/19 15:10:42 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:55:15 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ void	slash(t_all *all)
 	char	*buf;
 
 	i = -1;
-	while (all->envp[++i])
+	while (all->path[++i])
 	{
-		buf = all->envp[i];
-		all->envp[i] = ft_strjoin(buf, "/");
+		buf = all->path[i];
+		all->path[i] = ft_strjoin(buf, "/");
 		free(buf);
 	}
 }

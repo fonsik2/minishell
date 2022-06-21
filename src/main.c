@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 13:04:20 by ephantom          #+#    #+#             */
-/*   Updated: 2022/06/20 18:15:17 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:55:15 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	init_struct(t_all *all)
 {
 	all->list_envp = NULL;
 	all->here_doc = NULL;
-	all->envp = NULL;
+	all->path = NULL;
 	all->tmp_in = -1;
 	all->fd_in = -1;
 	all->fd_out = -1;

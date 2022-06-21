@@ -6,7 +6,7 @@
 #    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/21 12:35:06 by carys            ###   ########.fr        #
+#    Updated: 2022/06/21 16:25:57 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,9 +42,8 @@ CFLAGS	=	-Wall -Wextra -Werror
 BGN		=	START
 END		=	FINISH
 CLR		=	\001\033[1;92m\002
-# CLR		=	\x1b[4;33m
 RST		=	\001\033[0m\002
-# RST		=	\x1b[0m
+
 
 .PHONY:		all clean fclean re make_lib
 
