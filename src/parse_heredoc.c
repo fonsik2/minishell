@@ -6,7 +6,7 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:30:35 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/18 13:12:34 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 12:26:19 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_heredoc(char *limiter, int fd)
 
 	here = ft_strdup("");
 	if (!limiter || !here)
-		exit(EXIT_FAILURE);
+		exit(1);
 	signal(SIGINT, my_sign_here);
 	while (ft_strcmp(here, limiter))
 	{
@@ -35,7 +35,7 @@ static int	ft_heredoc(char *limiter, int fd)
 	free(limiter);
 	if (here)
 		free(here);
-	exit(EXIT_SUCCESS);
+	exit(0);
 }
 
 static int	er_print(char *str, char *limiter)

@@ -6,49 +6,11 @@
 /*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:47 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/20 12:05:42 by carys            ###   ########.fr       */
+/*   Updated: 2022/06/21 15:15:23 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*int	check_forbidden_symbols(char *str, int one, int two, int i)
-{
-	if (ft_strchr(str, ';'))
-		return (-1);
-	while (str[++i])
-	{
-		if (str[i] == '\'' && !one && !two)
-			one++;
-		else if (str[i] == '\"' && !one && !two)
-			two++;
-		else if (str[i] == '\'' && (one == 1) && !two)
-			one--;
-		else if (str[i] == '\"' && !one && (two == 1))
-			two--;
-	}
-	if (one)
-		return (-2);
-	if (two)
-		return (-3);
-	return (0);
-}
-
-int	check_closed_quote(int result)
-{
-	if (result == -1)
-		ft_putstr_fd(ER_NAME": syntax error near unexpected token ';'\n", 2);
-	else if (result == -2)
-		ft_putstr_fd(ER_NAME": syntax error: unexpected end of file\n", 2);
-	else if (result == -3)
-		ft_putstr_fd(ER_NAME": syntax error: unclosed \" double quote\n", 2);
-	if (result < 0)
-	{
-		g_exit = 1;
-		return (1);
-	}
-	return (0);
-}*/
 
 static void	token_pipe(char *str, int i)
 {

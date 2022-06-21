@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smdyan <marvin@42.fr>                      +#+  +:+       +#+         #
+#    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/12 19:08:58 by smdyan            #+#    #+#              #
-#    Updated: 2022/02/12 12:12:49 by smdyan           ###   ########.fr        #
+#    Updated: 2022/06/21 10:16:10 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ INCLUDES = ./
 
 HEADERS = libft.h
 
-CC = gcc
+CC = cc
 
 FLAGS = -Wall -Wextra -Werror
 
@@ -38,9 +38,9 @@ all: $(NAME)
 
 include $(wildcard *.d)
 
-$(NAME): $(OBJ) 
-	ar rc $(NAME) $?
-	ranlib $(NAME)
+$(NAME): $(OBJ)
+	@ar rc $(NAME) $?
+	@ranlib $(NAME)
 
 clean:
 	rm -f $(OBJ)
