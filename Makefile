@@ -3,42 +3,49 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+         #
+#    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/06/11 17:19:33 by smdyan            #+#    #+#              #
-#    Updated: 2022/06/11 17:21:17 by smdyan           ###   ########.fr        #
+#    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
+#    Updated: 2022/06/21 16:25:57 by carys            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-
 NAME	=	minishell
 
-SRCNAME	=	main.c					bin_echo_exit_pwd_env.c	ft_lstadd_back.c\
-			envp_to_list.c			bin_cd_utils.c\
-			exec.c					bin_builtin.c\
-			exec_signal.c			bin_cd.c\
-			exec_utils.c			bin_export.c\
-			parse_redirect_out.c	bin_export_utils.c		utils_free.c\
-			parse_space_redirect.c	bin_unset.c				utils.c\
-			parse_dollar.c			parse_pipe.c			utils_list_new.c\
-			parse_quote.c			parser.c				exec_one.c\
-			parse_redirect_in.c		parse_utils.c			exec_final.c\
-			parse_heredoc.c			parser_check.c			exec_utils_2.c
+SRCNAME	=	main.c				parser.c			bin_builtin.c\
+			envp_to_list.c		parse_dollar.c		bin_echo_exit_pwd_env.c\
+			utils.c				parse_pipe.c		bin_cd.c\
+			utils_free.c		parse_quote.c		bin_cd_utils.c\
+			utils_list_new.c	parser_check.c		bin_export.c\
+			exec.c				parse_utils.c		bin_export_utils.c\
+			exec_utils.c		parse_heredoc.c		bin_unset.c\
+			exec_signal.c		parse_redirect_out.c\
+			exec_one_final.c	parse_redirect_in_space.c\
 
-BLTDIR = ./built/
+BLTDIR = ./MD/
 SRCDIR = ./src/
-SRCS = ${addprefix ${SRCDIR}, ${SRCNAME}}
-OBJS	=	${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
-
-HEADER	=	./includes
-
-LIBREADLN = /usr/local/Cellar/readline/8.1.2/lib/
-HREADLN = /usr/local/Cellar/readline/8.1.2/include
+HEADER = ./includes
 LIBFT = ./libft
+LIBFT_LIB	= $(LIBFT)/libft.a
 
-CC		=	gcc
+SRCS 	= ${addprefix ${SRCDIR}, ${SRCNAME}}
+OBJS	= ${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
+
+LIBREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/lib
+HREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/include
+
+CC		=	cc
+RM		=	rm -rf
 
 CFLAGS	=	-Wall -Wextra -Werror
+
+BGN		=	START
+END		=	FINISH
+CLR		=	\001\033[1;92m\002
+RST		=	\001\033[0m\002
+
+
+.PHONY:		all clean fclean re make_lib
 
 all:		${BLTDIR} ${NAME}
 
@@ -46,22 +53,32 @@ $(BLTDIR):
 	mkdir -p $(BLTDIR)
 
 ${BLTDIR}%.o: ${SRCDIR}%.c
-			${CC} ${CFLAGS} -I${HEADER} -c $< -o $@ -MD
+			${CC} ${CFLAGS} -g -I${HEADER} -MD -c $< -o $@
 
 include $(wildcard *.d)
+include $(wildcard MD/*.d)
+include $(wildcard src/*.d)
 
-${NAME}:	${OBJS}
-			make all -C ${LIBFT}
-			${CC} ${CFLAGS} -g -L${LIBREADLN} -lreadline -L$(LIBFT) -lft\
+${NAME}:	${OBJS} $(LIBFT_LIB)
+			${CC} ${CFLAGS} -L${LIBREADLN} -lreadline -L${LIBFT} -lft\
 				-I${HREADLN} -o ${NAME} ${OBJS}
-			
+			@printf "${CLR}${BGN}${RST}\n"
+
+$(LIBFT_LIB):	make_lib ;
+
+make_lib:
+			@${MAKE} -C $(LIBFT)
+
 clean:
-			rm -rf ${BLTDIR}
-			make fclean -C ${LIBFT}
+			${RM} ${BLTDIR}
+			${MAKE} clean -C ${LIBFT}
 
 fclean:		clean
-			rm -f ${NAME}
+			${RM} ${NAME}
+			${MAKE} fclean -C ${LIBFT}
+			@printf "${CLR}${END}${RST}\n"
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+norm:
+			@norminette ${SRCS} ${HEADER} ${LIBFT}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_export.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:25:54 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:25:58 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:14:07 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void	add_list(int status, t_all *all, char *str)
 		ft_lstadd_back(&all->list_envp, newlst_without_equal(str));
 }
 
-void	add_to_env(t_all *all, char *str, int status)
+static void	add_to_env(t_all *all, char *str, int status)
 {
 	t_env	*tmp;
 	char	*s;
@@ -81,7 +81,7 @@ void	export_print_error(char *str)
 	ft_putstr_fd(ER_NAME": export: `", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd("': not a valid identifier\n", 2);
-	g_exit_status = 1;
+	g_exit = 1;
 }
 
 void	builtin_export(t_all *all)
@@ -104,7 +104,7 @@ void	builtin_export(t_all *all)
 			else
 			{
 				if (check_line(all->pipex->arg[i]) == -2)
-					equal = 0;
+					equal = 1;
 				add_to_env(all, all->pipex->arg[i], equal);
 			}
 		}

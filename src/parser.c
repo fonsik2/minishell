@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:33:20 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:33:27 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/20 20:58:51 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*parser_str(t_all *all, char *str, int i)
+static char	*parser_str(t_all *all, char *str, int i)
 {
 	while (str[i])
 	{
@@ -43,8 +43,8 @@ static void	new_str_null(t_all *all)
 	all->pipe_id = 0;
 	argv_list_free(all, 0);
 	pipe_list_free(all);
-	if (g_exit_status != 1)
-		g_exit_status = 258;
+	if (g_exit != 1)
+		g_exit = 258;
 }
 
 static void	exec_and_free(t_all *all, char *new_str)
@@ -61,27 +61,43 @@ static void	exec_and_free(t_all *all, char *new_str)
 
 void	parser(char *str, t_all *all)
 {
-	int		result;
 	char	*new_str;
 
 	new_str = ft_strtrim(str, " ");
 	if (!new_str)
 	{
-		g_exit_status = 258; //why >255 ?
+		g_exit = 258;
 		return ;
 	}
-	result = check_forbidden_symbols(new_str, 0, 0, -1); // fobiden simbols \ ; and odd ' "
-	if ((check_closed_quote(result)) || (check_empty_pipe(new_str, -1)))
+	if (check_empty_pipe(new_str, -1))
 	{
 		free(new_str);
 		new_str = NULL;
 		return ;
 	}
-	new_str = parser_str(all, new_str, 0); //next word recursion
+	new_str = parser_str(all, new_str, 0);
 	if (!new_str)
 	{
-		new_str_null(all); //
+		new_str_null(all);
 		return ;
 	}
-	exec_and_free(all, new_str); //exec command
+	exec_and_free(all, new_str);
+}
+
+int	ft_lstadd_back(t_env **lst, t_env *new)
+{
+	t_env	*el;
+
+	if (!new || !lst)
+		return (1);
+	if (!(*lst))
+	{
+		*lst = new;
+		return (0);
+	}
+	el = *lst;
+	while (el->next)
+		el = el->next;
+	el->next = new;
+	return (0);
 }

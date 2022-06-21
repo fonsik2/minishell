@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_quote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:31:08 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:31:11 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/20 10:19:17 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static char	*find_squote(int *index, char *str, char *one, char c)
 	int		start;
 
 	start = ++(*index);
-	while (str[*index] != c)
+	while (str[*index] != c && str[*index] != '\0')
 		(*index)++;
 	two = ft_substr(str, start, (*index) - start);
 	tmp = ft_strjoin(one, two);
@@ -92,7 +92,7 @@ char	*parse_dquote(char *str, int *i, t_all *all, int flag)
 	index = *i;
 	one = ft_substr(str, 0, index);
 	start = ++index;
-	while (str[index] != '"')
+	while (str[index] != '"' && str[index] != '\0')
 		index++;
 	two = ft_substr(str, start, index - start);
 	if (ft_strchr(two, '$'))

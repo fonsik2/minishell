@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:27:39 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:27:45 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/20 20:40:52 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	child_pipe(t_all *all)
+static void	child_pipe(t_all *all)
 {
 	char	*full_path;
 	char	**env;
@@ -30,7 +30,7 @@ void	child_pipe(t_all *all)
 	exit(127);
 }
 
-void	parent_pipe(t_all *all, pid_t pid)
+static void	parent_pipe(t_all *all, pid_t pid)
 {
 	all->pipex->pid = pid;
 	close(all->pipe_fd_out);
@@ -41,21 +41,21 @@ void	parent_pipe(t_all *all, pid_t pid)
 		all->pipex->fd_out, all->pipex->fd_add_out);
 }
 
-void	exec_pipe(t_all *all)
+static void	exec_pipe(t_all *all)
 {
 	pid_t	pid;
 
 	handle_signals_in_proc();
 	if (init_pipe_for_fd(all) == 1)
 	{
-		g_exit_status = 1;
+		g_exit = 1;
 		return ;
 	}
 	pid = fork();
 	if (pid == -1)
 	{
 		perror(ER_NAME);
-		g_exit_status = 1;
+		g_exit = 1;
 		return ;
 	}
 	if (!pid)
@@ -64,7 +64,7 @@ void	exec_pipe(t_all *all)
 		parent_pipe(all, pid);
 }
 
-void	pipeline(t_all *all)
+static void	pipeline(t_all *all)
 {
 	t_pipe	*tmp;
 	int		status;
@@ -100,8 +100,8 @@ void	exec_module(t_all *all)
 		size = len_pipex(all->pipex);
 		if (size == 1)
 		{
-			if (builtin(all)) //start executing builtin command
-				exec_one(all); //..or exec linux
+			if (builtin(all))
+				exec_one(all);
 		}
 		else
 			pipeline(all);

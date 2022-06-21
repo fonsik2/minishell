@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_echo_exit_pwd_env.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:25:26 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:25:31 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/21 10:39:16 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	builtin_echo(t_all *all, int i, int option, int fd)
 	if (!option)
 		write(fd, "\n", 1);
 	close_five_fd(all);
-	g_exit_status = 0;
+	g_exit = 0;
 }
 
 void	builtin_exit(t_all *all)
@@ -63,7 +63,7 @@ void	builtin_exit(t_all *all)
 	{
 		ft_putstr_fd(ER_NAME": exit: ", 2);
 		ft_putstr_fd(": too many arguments\n", 2);
-		g_exit_status = 1;
+		g_exit = 1;
 	}
 }
 
@@ -77,14 +77,14 @@ void	builtin_pwd(t_all *all)
 	{
 		ft_putstr_fd(ER_NAME": ", 2);
 		perror("pwd: ");
-		g_exit_status = 127;
+		g_exit = 127;
 		return ;
 	}
 	fd = choose_fd(all);
 	ft_putstr_fd(dir, fd);
 	ft_putstr_fd("\n", fd);
 	free(dir);
-	g_exit_status = 0;
+	g_exit = 0;
 	close_five_fd(all);
 }
 
@@ -93,7 +93,7 @@ static void	env_print_error(char *str)
 	ft_putstr_fd("env: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": No such file or directory\n", 2);
-	g_exit_status = 127;
+	g_exit = 127;
 }
 
 void	builtin_env(t_all *all, int fd)
@@ -118,6 +118,6 @@ void	builtin_env(t_all *all, int fd)
 		}
 		tmp = tmp->next;
 	}
-	g_exit_status = 0;
+	g_exit = 0;
 	close_five_fd(all);
 }

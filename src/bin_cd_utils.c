@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_cd_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:24:57 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:25:00 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:57:01 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_chdir(char *str, t_all *all)
 	{
 		ft_putstr_fd(ER_NAME": cd: ", 2);
 		perror(all->pipex->arg[1]);
-		g_exit_status = 1;
+		g_exit = 1;
 		return (-1);
 	}
 	return (0);
@@ -56,7 +56,7 @@ void	add_new_pwd(t_all *all, char *old_pwd, char *pwd)
 int	print_home_not_set(void)
 {
 	ft_putstr_fd(ER_NAME": cd: HOME not set\n", 2);
-	g_exit_status = 1;
+	g_exit = 1;
 	return (-1);
 }
 
@@ -65,7 +65,7 @@ int	check_after_cd_one(t_all *all, int *find)
 	t_env	*tmp;
 
 	tmp = all->list_envp;
-	if ((!(ft_strcmp(all->pipex->arg[1], "~")) || (!all->pipex->arg[1])))
+	if (!(ft_strcmp(all->pipex->arg[1], "~")))
 	{
 		*find = 1;
 		while (tmp)
@@ -110,7 +110,7 @@ int	check_after_cd_three(t_all *all, int *find, int flag)
 		if (!flag)
 		{
 			ft_putstr_fd(ER_NAME": cd: OLDPWD not set\n", 2);
-			g_exit_status = 1;
+			g_exit = 1;
 			return (-1);
 		}
 	}

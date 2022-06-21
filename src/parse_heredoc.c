@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_heredoc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:30:35 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:30:39 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/21 12:26:19 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	ft_heredoc(char *limiter, int fd)
 
 	here = ft_strdup("");
 	if (!limiter || !here)
-		exit(EXIT_FAILURE);
+		exit(1);
 	signal(SIGINT, my_sign_here);
 	while (ft_strcmp(here, limiter))
 	{
@@ -35,15 +35,15 @@ static int	ft_heredoc(char *limiter, int fd)
 	free(limiter);
 	if (here)
 		free(here);
-	exit(EXIT_SUCCESS);
+	exit(0);
 }
 
 static int	er_print(char *str, char *limiter)
 {
 	perror(str);
 	free(limiter);
-	g_exit_status = 1;
-	return (g_exit_status);
+	g_exit = 1;
+	return (g_exit);
 }
 
 static int	read_heredoc(char *limiter, t_all *all)
@@ -66,10 +66,10 @@ static int	read_heredoc(char *limiter, t_all *all)
 	if (pid == 0)
 		return (ft_heredoc(limiter, fd));
 	wait(&status);
-	g_exit_status = WEXITSTATUS(status);
+	g_exit = WEXITSTATUS(status);
 	close(fd);
 	free(limiter);
-	return (g_exit_status);
+	return (g_exit);
 }
 
 static char	*get_new_str(char *new_str, char *str, int *index)
@@ -104,7 +104,7 @@ char	*parse_heredoc(char *str, int *i, t_all *all)
 	limiter = ft_substr(str, start, index - start);
 	if (read_heredoc(limiter, all))
 		return (free_null(all, str, new_str));
-	handler_sig();
+	handler_signal();
 	(*i) = ft_strlen(new_str) - 1;
 	new_str = get_new_str(new_str, str, &index);
 	free(str);

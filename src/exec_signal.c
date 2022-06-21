@@ -3,27 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec_signal.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:28:49 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:29:00 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/19 11:30:14 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	my_sigquit_proc(int sig)
+static void	my_sigquit_proc(int sig)
 {
 	printf("Quit: %d\n", sig);
-	g_exit_status = 131;
+	g_exit = 131;
 }
 
-void	my_sigint_proc(int sig)
+static void	my_sigint_proc(int sig)
 {
 	if (sig == SIGINT)
 	{
 		write(2, "\n", 1);
-		g_exit_status = 130;
+		g_exit = 130;
 	}
 }
 

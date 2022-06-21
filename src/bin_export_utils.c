@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_export_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:26:20 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:26:32 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 20:40:09 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	set_nul(t_env *this_name)
 	}
 }
 
-int	set_index(t_all *all)
+static int	set_index(t_all *all)
 {
 	t_env	*this_name;
 	t_env	*next_name;
@@ -46,7 +46,7 @@ int	set_index(t_all *all)
 	return (0);
 }
 
-void	print_env(int fd, t_env *tmp)
+static void	print_env(int fd, t_env *tmp)
 {
 	ft_putstr_fd("declare -x ", fd);
 	ft_putstr_fd(tmp->name, fd);
@@ -82,7 +82,7 @@ void	print_sorted_env(t_all *all)
 		}
 		tmp = tmp->next;
 	}
-	g_exit_status = 0;
+	g_exit = 0;
 	close_fds(all->pipex->fd_in, all->pipex->fd_out, all->pipex->fd_add_out);
 	close_two_fds(all->pipe_fd_in, all->pipe_fd_out);
 }

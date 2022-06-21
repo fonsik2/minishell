@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_dollar.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:30:16 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:30:19 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/18 11:52:20 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*check_after_dollar(int *index, t_all *all, char *str, char *two)
 	start = ++(*index);
 	if (str[*index] == '?')
 	{
-		two = ft_itoa(g_exit_status);
+		two = ft_itoa(g_exit);
 		(*index)++;
 	}
 	else if (ft_isdigit(str[*index]))

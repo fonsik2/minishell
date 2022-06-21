@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bin_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: smdyan <smdyan@student.21-school.ru>       +#+  +:+       +#+        */
+/*   By: carys <carys@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/11 17:23:49 by smdyan            #+#    #+#             */
-/*   Updated: 2022/06/11 17:24:01 by smdyan           ###   ########.fr       */
+/*   Updated: 2022/06/21 12:42:29 by carys            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,12 @@ void	close_two_fds(int fd1, int fd2)
 		close(fd1);
 	if (fd2 >= 0)
 		close(fd2);
+}
+
+void	close_five_fd(t_all *all)
+{
+	close_fds(all->pipex->fd_in, all->pipex->fd_out, all->pipex->fd_add_out);
+	close_two_fds(all->pipe_fd_in, all->pipe_fd_out);
 }
 
 int	builtin(t_all *all)
