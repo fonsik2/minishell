@@ -6,7 +6,7 @@
 #    By: carys <carys@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/06/15 17:30:39 by carys             #+#    #+#              #
-#    Updated: 2022/06/21 16:25:57 by carys            ###   ########.fr        #
+#    Updated: 2022/06/26 23:01:38 by smdyan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,8 +31,8 @@ LIBFT_LIB	= $(LIBFT)/libft.a
 SRCS 	= ${addprefix ${SRCDIR}, ${SRCNAME}}
 OBJS	= ${addprefix ${BLTDIR}, ${SRCNAME:%.c=%.o}}
 
-LIBREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/lib
-HREADLN = /Users/carys/.brew/Cellar/readline/8.1.2/include
+LIBREADLN = /usr/local//Cellar/readline/8.1.2/lib
+HREADLN = /usr/local/Cellar/readline/8.1.2/include
 
 CC		=	cc
 RM		=	rm -rf
